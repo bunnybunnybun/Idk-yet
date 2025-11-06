@@ -8,5 +8,5 @@ else
 fi
 yay -S --needed mangowc-git
 
-chmod +x ~/this_distro_thingy/setup_mango_script.sh
-~/this_distro_thingy/setup_mango_script.sh
+chmod +x ~/Idk-yet/this_distro_thingy/setup_mango_script.sh
+~/Idk-yet/this_distro_thingy/setup_mango_script.sh
