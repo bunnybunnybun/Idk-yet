@@ -6,7 +6,7 @@ if [ -f "$HOME/Idk-yet/.yay_has_been_installed" ]; then
 else
     cd ~/ && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si && cd .. && touch ~/Idk-yet/.yay_has_been_installed && rm -rf yay
 fi
-yay -S --needed mangowc-git
+yay -S --needed mangowc-git quickshell
 
 mkdir ~/.config/mango
 chmod +x ~/Idk-yet/this_distro_thingy/setup_mango_script.sh
