@@ -44,9 +44,35 @@ Scope {
 
                 RowLayout {
                     anchors.fill: parent
+
                     RowLayout {
                         id: leftModules
-                        anchors.fill: parent
+                        Layout.alignment: Qt.AlignLeft
+                        Layout.fillWidth: true
+                        Layout.leftMargin: 8
+                        spacing: 10
+
+                        Button {
+                            id: appsButton
+                            text: "Apps"
+                            Layout.preferredHeight: 25
+                            Layout.preferredWidth: 50
+                            onClicked: launchFuzzel.running = true
+
+                            background: Rectangle {
+                                bottomLeftRadius: 20
+                                bottomRightRadius: 20
+                                topLeftRadius: 20
+                                topRightRadius: 20
+                                color: parent.down ? Qt.rgba(1.0, 0.7, 0.988, 1.0) :
+                                    parent.hovered ? Qt.rgba(1.0, 0.85, 1.0, 1.0) : Qt.rgba(1.0, 0.7, 0.988, 1.0)
+                            }
+                        }
+                    }
+
+                    RowLayout {
+                        id: centerModules
+                        anchors.centerIn: parent
                         spacing: 10
 
                         Button {
@@ -65,17 +91,35 @@ Scope {
                             }
                         }
 
-                        
+                        Button {
+                            id: settingsButton
+                            contentItem: Label {
+                                text: "󰁋"
+                                font.pixelSize: 18
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                            }
+                            Layout.preferredHeight: 25
+                            Layout.preferredWidth: 50
+                            Layout.alignment: Qt.AlignRight
+                            onClicked: settingsPopup.visible = !settingsPopup.visible
+                            background: Rectangle {
+                                bottomLeftRadius: 20
+                                bottomRightRadius: 20
+                                topLeftRadius: 20
+                                topRightRadius: 20
+                                color: parent.down ? Qt.rgba(1.0, 0.7, 0.988, 1.0) :
+                                    parent.hovered ? Qt.rgba(1.0, 0.85, 1.0, 1.0) : Qt.rgba(1.0, 0.7, 0.988, 1.0)
+                            }
+                        }
                     }
-
-                    //Item {
-                    //    Layout.fillWidth: true
-                    //}
 
                     RowLayout {
                         id: rightModules
                         Layout.alignment: Qt.AlignRight
                         Layout.fillWidth: true
+                        Layout.rightMargin: 8
+                        spacing: 10
 
                         Button {
                             id: trayButton
@@ -99,27 +143,6 @@ Scope {
                                     parent.hovered ? Qt.rgba(1.0, 0.85, 1.0, 1.0) : Qt.rgba(1.0, 0.7, 0.988, 1.0)
                             }
                         }
-
-                        Button {
-                            id: settingsButton
-                            contentItem: Label {
-                                text: "󰁋"
-                                font.pixelSize: 18
-                                horizontalAlignment: Text.AlignHCenter
-                                verticalAlignment: Text.AlignVCenter
-                            }
-                            Layout.preferredHeight: 25
-                            Layout.preferredWidth: 50
-                            onClicked: trayPopup.visible = !trayPopup.visible
-                            background: Rectangle {
-                                bottomLeftRadius: 20
-                                bottomRightRadius: 20
-                                topLeftRadius: 20
-                                topRightRadius: 20
-                                color: parent.down ? Qt.rgba(1.0, 0.7, 0.988, 1.0) :
-                                    parent.hovered ? Qt.rgba(1.0, 0.85, 1.0, 1.0) : Qt.rgba(1.0, 0.7, 0.988, 1.0)
-                            }
-                        }
                     }
                 }
             }
@@ -129,12 +152,14 @@ Scope {
                 anchor.window: toplevel
                 anchor.rect.x: parentWindow.width / 2 -width / 2
                 anchor.rect.y: 50
-                implicitWidth: 500
-                implicitHeight: 500
+                implicitWidth: 400
+                implicitHeight: 400
                 visible: false
                 color: "transparent"
                 Rectangle {
                     color: Qt.rgba(1.0, 0.0, 0.788, 0.8)
+                    border.color: Qt.rgba(1.0, 0.7, 0.988, 1.0)
+                border.width: 3
                     anchors {
                         fill: parent
                         topMargin: 10
@@ -159,6 +184,8 @@ Scope {
                 color: "transparent"
                 Rectangle {
                     color: Qt.rgba(1.0, 0.0, 0.788, 0.8)
+                    border.color: Qt.rgba(1.0, 0.7, 0.988, 1.0)
+                    border.width: 3
                     anchors {
                         fill: parent
                         topMargin: 10
@@ -166,6 +193,31 @@ Scope {
                     radius: 20
                     Text {
                         text: "Tray thingy"
+                        anchors.centerIn: parent
+                    }
+                }
+            }
+
+            PopupWindow {
+                id: settingsPopup
+                anchor.window: toplevel
+                anchor.rect.x: parentWindow.width / 2 -width / 2
+                anchor.rect.y: 50
+                implicitWidth: 500
+                implicitHeight: 500
+                visible: false
+                color: "transparent"
+                Rectangle {
+                    color: Qt.rgba(1.0, 0.0, 0.788, 0.8)
+                    border.color: Qt.rgba(1.0, 0.7, 0.988, 1.0)
+                    border.width: 3
+                    anchors {
+                        fill: parent
+                        topMargin: 10
+                    }
+                    radius: 20
+                    Text {
+                        text: "Settings menu"
                         anchors.centerIn: parent
                     }
                 }
@@ -181,6 +233,11 @@ Scope {
         stdout: StdioCollector {
             onStreamFinished: root.time = this.text
         }
+    }
+
+    Process {
+        id: launchFuzzel
+        command: ["bash", "-c", "fuzzel"]
     }
 
     Timer {
