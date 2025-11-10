@@ -237,7 +237,7 @@ Scope {
 
     Process {
         id: launchFuzzel
-        command: ["bash", "-c", "fuzzel"]
+        command: ["bash", "-c", "fuzzel --config /etc/xdg/fuzzel/fuzzel_app_drawer.ini"]
     }
 
     Timer {
