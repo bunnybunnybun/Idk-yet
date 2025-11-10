@@ -1,6 +1,6 @@
 #!/bin/bash
 sudo pacman -Syu
-sudo pacman -S --needed kitty git base-devel fuzzel
+sudo pacman -S --needed kitty git base-devel fuzzel swaybg
 if [ -f "$HOME/Idk-yet/.yay_has_been_installed" ]; then
     echo "Yay has already been installed"
 else

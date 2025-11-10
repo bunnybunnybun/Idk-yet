@@ -48,13 +48,19 @@ Scope {
                     RowLayout {
                         id: leftModules
                         Layout.alignment: Qt.AlignLeft
-                        Layout.fillWidth: true
+                        Layout.fillWidth: false
                         Layout.leftMargin: 8
                         spacing: 10
 
                         Button {
                             id: appsButton
-                            text: "Apps"
+                            contentItem: Label {
+                                text: "Apps"
+                                font.pixelSize: 14
+                                font.bold: true
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                            }
                             Layout.preferredHeight: 25
                             Layout.preferredWidth: 50
                             onClicked: launchFuzzel.running = true
@@ -72,14 +78,21 @@ Scope {
 
                     RowLayout {
                         id: centerModules
-                        anchors.centerIn: parent
+                        Layout.fillWidth: true
+                        Layout.alignment: Qt.AlignHCenter
                         spacing: 10
 
                         Button {
                             id: clockButton
-                            text: root.time
+                            contentItem: Label {
+                                text: root.time
+                                font.pixelSize: 14
+                                font.bold: true
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                            }
                             Layout.preferredHeight: 25
-                            Layout.preferredWidth: 230
+                            Layout.preferredWidth: 240
                             onClicked: clockPopup.visible = !clockPopup.visible
                             background: Rectangle {
                                 bottomLeftRadius: 20
@@ -94,8 +107,9 @@ Scope {
                         Button {
                             id: settingsButton
                             contentItem: Label {
-                                text: "󰁋"
-                                font.pixelSize: 18
+                                text: ""
+                                font.pixelSize: 16
+                                font.bold: true
                                 horizontalAlignment: Text.AlignHCenter
                                 verticalAlignment: Text.AlignVCenter
                             }
@@ -117,7 +131,7 @@ Scope {
                     RowLayout {
                         id: rightModules
                         Layout.alignment: Qt.AlignRight
-                        Layout.fillWidth: true
+                        Layout.fillWidth: false
                         Layout.rightMargin: 8
                         spacing: 10
 
@@ -125,14 +139,15 @@ Scope {
                             id: trayButton
                             contentItem: Label {
                                 text: "󰁋"
-                                font.pixelSize: 18
+                                font.pixelSize: 20
+                                font.bold: true
                                 horizontalAlignment: Text.AlignHCenter
                                 verticalAlignment: Text.AlignVCenter
                             }
-                            //Layout.alignment: Qt.AlignRight
+                            Layout.alignment: Qt.AlignRight
                             anchors.rightMargin: 8
                             Layout.preferredHeight: 25
-                            Layout.preferredWidth: 50
+                            Layout.preferredWidth: 35
                             onClicked: trayPopup.visible = !trayPopup.visible
                             background: Rectangle {
                                 bottomLeftRadius: 20
@@ -216,9 +231,63 @@ Scope {
                         topMargin: 10
                     }
                     radius: 20
-                    Text {
-                        text: "Settings menu"
-                        anchors.centerIn: parent
+                    
+                    ColumnLayout {
+                        anchors.fill: parent
+                        spacing: 15
+                        Text {
+                            text: "Choose a wallpaper:"
+                            Layout.alignment: Qt.AlignHCenter
+                            Layout.topMargin: 20
+                            font.pixelSize: 32
+                        }
+
+                        GridLayout {
+                            id: wallpaperGrid
+                            rows: 3
+                            columns: 2
+                            Layout.fillWidth: true
+                            Layout.fillHeight: true
+                            Layout.margins: 15
+                            //spacing: 15
+
+                            Repeater {
+                                model: [
+                                    { path: "/home/carlisle/Idk-yet/Idk-yet/swaybg/Daisies.jpg", name: "Daisies" },
+                                    { path: "/home/carlisle/Idk-yet/Idk-yet/swaybg/arch_rainbow.png", name: "Arch" },
+                                    { path: "/home/carlisle/Idk-yet/Idk-yet/swaybg/fall.jpg", name: "Fall" },
+                                    { path: "/home/carlisle/Idk-yet/Idk-yet/swaybg/halloween.jpg", name: "Graveyard" },
+                                    { path: "/home/carlisle/Idk-yet/Idk-yet/swaybg/magic.jpg", name: "Magic" },
+                                ]
+
+                                Button {
+                                    Layout.fillWidth: true
+                                    Layout.fillHeight: true
+                                    Layout.margins: 5
+
+                                    background: Rectangle {
+                                        radius: 3
+                                        border.color: Qt.rgba(1.0, 0.7, 0.988, 1.0)
+                                        border.width: 3
+
+                                        Image {
+                                            source: modelData.path
+                                            anchors.fill: parent
+                                            anchors.margins: 3
+                                            fillMode: Image.PreserveAspectCrop
+                                        }
+                                    }
+
+                                    ToolTip.text: modelData.name
+                                    ToolTip.delay: 1
+
+                                    onClicked: {
+                                        setWallpaper.command = ["bash", "-c", "swaybg -i \"" + modelData.path + "\""]
+                                        setWallpaper.running = true
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -238,6 +307,11 @@ Scope {
     Process {
         id: launchFuzzel
         command: ["bash", "-c", "fuzzel --config /etc/xdg/fuzzel/fuzzel_app_drawer.ini"]
+    }
+
+    Process {
+        id: setWallpaper
+        command: ["bash", "-c", "swaybg -i ~/Idk-yet/Idk-yet/swaybg/Daisies.jpg"]
     }
 
     Timer {
