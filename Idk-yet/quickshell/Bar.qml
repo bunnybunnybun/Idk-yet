@@ -6,7 +6,22 @@ import QtQuick.Controls
 
 Scope {
     id: root
+    property string homePath: ""
+    property bool homePathReady: false
     property string time
+
+    Process {
+        id: homeDirProc
+        command: ["sh", "-c", "echo $HOME"]
+        running: true
+
+        stdout: StdioCollector {
+            onStreamFinished: {
+                root.homePath = this.text.trim()
+                root.homePathReady = true
+            }
+        }
+    }
 
     Variants {
         model: Quickshell.screens;
@@ -92,7 +107,7 @@ Scope {
                                 verticalAlignment: Text.AlignVCenter
                             }
                             Layout.preferredHeight: 25
-                            Layout.preferredWidth: 240
+                            Layout.preferredWidth: 250
                             onClicked: clockPopup.visible = !clockPopup.visible
                             background: Rectangle {
                                 bottomLeftRadius: 20
@@ -244,6 +259,7 @@ Scope {
 
                         GridLayout {
                             id: wallpaperGrid
+                            visible: root.homePathReady
                             rows: 3
                             columns: 2
                             Layout.fillWidth: true
@@ -252,12 +268,16 @@ Scope {
                             //spacing: 15
 
                             Repeater {
+                                function getFilePath(relativePath) {
+                                    return "file://" + Qt.application.path + "/../" + relativePath;
+                                }
+
                                 model: [
-                                    { path: "/home/carlisle/Idk-yet/Idk-yet/swaybg/Daisies.jpg", name: "Daisies" },
-                                    { path: "/home/carlisle/Idk-yet/Idk-yet/swaybg/arch_rainbow.png", name: "Arch" },
-                                    { path: "/home/carlisle/Idk-yet/Idk-yet/swaybg/fall.jpg", name: "Fall" },
-                                    { path: "/home/carlisle/Idk-yet/Idk-yet/swaybg/halloween.jpg", name: "Graveyard" },
-                                    { path: "/home/carlisle/Idk-yet/Idk-yet/swaybg/magic.jpg", name: "Magic" },
+                                    { path: "file://" + homePath + "/Idk-yet/Idk-yet/swaybg/Daisies.jpg", name: "Daisies" },
+                                    { path: "file://" + homePath + "/Idk-yet/Idk-yet/swaybg/arch_rainbow.png", name: "Arch" },
+                                    { path: "file://" + homePath + "/Idk-yet/Idk-yet/swaybg/fall.jpg", name: "Fall" },
+                                    { path: "file://" + homePath + "/Idk-yet/Idk-yet/swaybg/halloween.jpg", name: "Graveyard" },
+                                    { path: "file://" + homePath + "/Idk-yet/Idk-yet/swaybg/magic.jpg", name: "Magic" },
                                 ]
 
                                 Button {
@@ -282,7 +302,7 @@ Scope {
                                     ToolTip.delay: 1
 
                                     onClicked: Quickshell.execDetached([
-                                        "bash", "-c", "pkill -x swaybg; swaybg -m fill -i \"" + modelData.path + "\""
+                                        "bash", "-c", "pkill -x swaybg; swaybg -m fill -i \"" + modelData.path.replace('file://', '') + "\""
                                     ])
                                 }
                             }
