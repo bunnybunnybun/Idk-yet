@@ -1,6 +1,7 @@
 #!/bin/bash
 sudo pacman -Syu
-sudo pacman -S --needed kitty git base-devel fuzzel swaybg
+sudo pacman -S --needed kitty git base-devel fuzzel swaybg sddm gtk3 gtk4
+sudo systemctl enable sddm
 if [ -f "$HOME/Idk-yet/.yay_has_been_installed" ]; then
     echo "Yay has already been installed"
 else
