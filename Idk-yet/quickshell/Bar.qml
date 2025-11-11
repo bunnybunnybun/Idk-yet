@@ -281,10 +281,9 @@ Scope {
                                     ToolTip.text: modelData.name
                                     ToolTip.delay: 1
 
-                                    onClicked: {
-                                        setWallpaper.command = ["bash", "-c", "swaybg -i \"" + modelData.path + "\""]
-                                        setWallpaper.running = true
-                                    }
+                                    onClicked: Quickshell.execDetached([
+                                        "bash", "-c", "pkill -x swaybg; swaybg -i \"" + modelData.path + "\""
+                                    ])
                                 }
                             }
                         }
@@ -307,11 +306,6 @@ Scope {
     Process {
         id: launchFuzzel
         command: ["bash", "-c", "fuzzel --config /etc/xdg/fuzzel/fuzzel_app_drawer.ini"]
-    }
-
-    Process {
-        id: setWallpaper
-        command: ["bash", "-c", "swaybg -i ~/Idk-yet/Idk-yet/swaybg/Daisies.jpg"]
     }
 
     Timer {
