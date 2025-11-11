@@ -282,7 +282,7 @@ Scope {
                                     ToolTip.delay: 1
 
                                     onClicked: Quickshell.execDetached([
-                                        "bash", "-c", "pkill -x swaybg; swaybg -i \"" + modelData.path + "\""
+                                        "bash", "-c", "pkill -x swaybg; swaybg -m fill -i \"" + modelData.path + "\""
                                     ])
                                 }
                             }
