@@ -6,7 +6,8 @@ if [ -f "$HOME/Idk-yet/.yay_has_been_installed" ]; then
 else
     cd ~/ && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si && cd .. && touch ~/Idk-yet/.yay_has_been_installed && rm -rf yay
 fi
-yay -S --needed mangowc-git quickshell
+yay -S --needed mangowc-git quickshell fluent-gtk-theme
+gsettings set org.gnome.desktop.interface gtk-theme "Fluent-pink-Light"
 sudo cp -r ~/Idk-yet/Idk-yet/fuzzel /etc/xdg/
 cp -r ~/Idk-yet/Idk-yet/kitty ~/.config/
 mkdir ~/.config/mango
