@@ -39,8 +39,8 @@ class WallpaperWindow(Gtk.Window):
         for i in range(display.get_n_monitors()):
             monitor = display.get_monitor(i)
             geometry = monitor.get_geometry()
-            self.monitor_x, self.monitor_y = geometry.width, geometry.height
-            print(self.monitor_x, self.monitor_y)
+            self.screen_width, self.screen_height = geometry.width, geometry.height
+            print(self.screen_width, self.screen_height)
 
     def update_mouse_position(self):
         try:
@@ -64,15 +64,20 @@ class WallpaperWindow(Gtk.Window):
         Gdk.cairo_set_source_pixbuf(cr, self.background, 0, 0)
         cr.paint()
 
-        if self.mouse_x > 0 and self.mouse_y > 0:
-            Gdk.cairo_set_source_pixbuf(
-                cr,
-                self.foreground,
-                self.monitor_x // 2 - self.foreground.get_width() // 2 + self.mouse_x // 3,
-                self.monitor_y // 2 - self.foreground.get_height() // 2 + self.mouse_y // 3
-            )
-            cr.paint()
-        return False
+        center_x = self.screen_width / 2
+        center_y = self.screen_height / 2
+
+        parallax_x = center_x + (self.mouse_x - center_x) * 0.3
+        parallax_y = center_y + (self.mouse_y - center_y) * 0.3
+
+        Gdk.cairo_set_source_pixbuf(
+            cr,
+            self.foreground,
+            parallax_x - self.foreground.get_width() / 2,
+            parallax_y - self.foreground.get_height() / 2
+
+        )
+        cr.paint()
 
     #def on_motion(self, widget, event):
         #self.fore_x, self.fore_y = event.x, event.y
