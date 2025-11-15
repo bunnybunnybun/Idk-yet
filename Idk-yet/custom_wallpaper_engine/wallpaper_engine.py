@@ -1,3 +1,4 @@
+import cairo
 import gi
 import subprocess
 import os
