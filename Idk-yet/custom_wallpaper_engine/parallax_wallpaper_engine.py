@@ -18,8 +18,8 @@ class WallpaperWindow(Gtk.Window):
         GtkLayerShell.set_anchor(self, GtkLayerShell.Edge.RIGHT, True)
         GtkLayerShell.set_exclusive_zone(self, -1)
 
-        self.background = GdkPixbuf.Pixbuf.new_from_file("/home/carlisle/Downloads/space_with_eyes_downscaled.png")
-        self.foreground = GdkPixbuf.Pixbuf.new_from_file("/home/carlisle/Idk-yet/Idk-yet/custom_wallpaper_engine/eyeball_foreground_3.png")
+        self.background = GdkPixbuf.Pixbuf.new_from_file("/home/carlisle/Idk-yet/Idk-yet/custom_wallpaper_engine/space_with_eyes.png")
+        self.foreground = GdkPixbuf.Pixbuf.new_from_file("/home/carlisle/Idk-yet/Idk-yet/custom_wallpaper_engine/eyeball_foreground.png")
 
         self.mouse_x, self.mouse_y = 0, 0
 
@@ -89,7 +89,16 @@ class WallpaperWindow(Gtk.Window):
         Gdk.cairo_set_source_pixbuf(
             cr,
             self.foreground,
-            parallax_x - self.foreground.get_width() / 2,
+            -100 + parallax_x - self.foreground.get_width() / 2,
+            parallax_y - self.foreground.get_height() / 2
+
+        )
+        cr.paint()
+
+        Gdk.cairo_set_source_pixbuf(
+            cr,
+            self.foreground,
+            400 + parallax_x - self.foreground.get_width() / 2,
             parallax_y - self.foreground.get_height() / 2
 
         )
