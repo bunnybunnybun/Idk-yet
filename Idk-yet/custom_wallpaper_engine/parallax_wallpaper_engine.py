@@ -18,8 +18,8 @@ class WallpaperWindow(Gtk.Window):
         GtkLayerShell.set_anchor(self, GtkLayerShell.Edge.RIGHT, True)
         GtkLayerShell.set_exclusive_zone(self, -1)
 
-        self.background = GdkPixbuf.Pixbuf.new_from_file("/home/carlisle/Idk-yet/Idk-yet/swaybg/arch_rainbow.png")
-        self.foreground = GdkPixbuf.Pixbuf.new_from_file("/home/carlisle/Idk-yet/Idk-yet/custom_wallpaper_engine/hmm.png")
+        self.background = GdkPixbuf.Pixbuf.new_from_file("/home/carlisle/Downloads/space_with_eyes_downscaled.png")
+        self.foreground = GdkPixbuf.Pixbuf.new_from_file("/home/carlisle/Idk-yet/Idk-yet/custom_wallpaper_engine/eyeball_foreground_3.png")
 
         self.mouse_x, self.mouse_y = 0, 0
 
@@ -61,14 +61,30 @@ class WallpaperWindow(Gtk.Window):
         return True
 
     def on_draw(self, widget, cr):
+        #screen_width, screen_height = self.screen_width, self.screen_height
+        img_width = self.background.get_width()
+        img_height = self.background.get_height()
+        scale_x = self.screen_width / img_width
+        scale_y = self.screen_height / img_height
+
+        scale = max(scale_x, scale_y)
+
+        translate_x = (self.screen_width - img_width * scale) / 2
+        translate_y = (self.screen_height - img_height * scale) / 2
+
+        cr.translate(translate_x, translate_y)
+        cr.scale(scale, scale)
+
         Gdk.cairo_set_source_pixbuf(cr, self.background, 0, 0)
         cr.paint()
+
+        cr.identity_matrix()
 
         center_x = self.screen_width / 2
         center_y = self.screen_height / 2
 
-        parallax_x = center_x + (self.mouse_x - center_x) * 0.3
-        parallax_y = center_y + (self.mouse_y - center_y) * 0.3
+        parallax_x = center_x + (self.mouse_x - center_x) * 0.2
+        parallax_y = center_y + (self.mouse_y - center_y) * 0.2
 
         Gdk.cairo_set_source_pixbuf(
             cr,
