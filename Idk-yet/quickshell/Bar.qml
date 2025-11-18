@@ -279,6 +279,7 @@ Scope {
                                     { path: "file://" + homePath + "/Idk-yet/Idk-yet/swaybg/halloween.jpg", name: "Graveyard", command: "swaybg -m fill -i "  + homePath + "/Idk-yet/Idk-yet/swaybg/halloween.jpg" },
                                     { path: "file://" + homePath + "/Idk-yet/Idk-yet/swaybg/magic.jpg", name: "Magic", command: "swaybg -m fill -i "  + homePath + "/Idk-yet/Idk-yet/swaybg/magic.jpg" },
                                     { path: "file://" + homePath + "/Idk-yet/Idk-yet/custom_wallpaper_engine/space_with_eyes.png", name: "Eyes (interactive)", command: "python3 " + homePath + "/Idk-yet/Idk-yet/custom_wallpaper_engine/parallax_wallpaper_engine.py" },
+                                    { path: "file://" + homePath + "/Idk-yet/Idk-yet/custom_wallpaper_engine/space_with_eyes.png", name: "Eyes (interactive)", command: "python3 " + homePath + "/Idk-yet/Idk-yet/custom_wallpaper_engine/parallax_wallpaper_engine_2.py" },
                                 ]
 
                                 Button {
