@@ -273,11 +273,12 @@ Scope {
                                 }
 
                                 model: [
-                                    { path: "file://" + homePath + "/Idk-yet/Idk-yet/swaybg/Daisies.jpg", name: "Daisies" },
-                                    { path: "file://" + homePath + "/Idk-yet/Idk-yet/swaybg/arch_rainbow.png", name: "Arch" },
-                                    { path: "file://" + homePath + "/Idk-yet/Idk-yet/swaybg/fall.jpg", name: "Fall" },
-                                    { path: "file://" + homePath + "/Idk-yet/Idk-yet/swaybg/halloween.jpg", name: "Graveyard" },
-                                    { path: "file://" + homePath + "/Idk-yet/Idk-yet/swaybg/magic.jpg", name: "Magic" },
+                                    { path: "file://" + homePath + "/Idk-yet/Idk-yet/swaybg/Daisies.jpg", name: "Daisies", command: "swaybg -m fill -i " + homePath + "/Idk-yet/Idk-yet/swaybg/Daisies.jpg" },
+                                    { path: "file://" + homePath + "/Idk-yet/Idk-yet/swaybg/arch_rainbow.png", name: "Arch", command: "swaybg -m fill -i "  + homePath + "/Idk-yet/Idk-yet/swaybg/arch_rainbow.png" },
+                                    { path: "file://" + homePath + "/Idk-yet/Idk-yet/swaybg/fall.jpg", name: "Fall", command: "swaybg -m fill -i "  + homePath + "/Idk-yet/Idk-yet/swaybg/fall.jpg" },
+                                    { path: "file://" + homePath + "/Idk-yet/Idk-yet/swaybg/halloween.jpg", name: "Graveyard", command: "swaybg -m fill -i "  + homePath + "/Idk-yet/Idk-yet/swaybg/halloween.jpg" },
+                                    { path: "file://" + homePath + "/Idk-yet/Idk-yet/swaybg/magic.jpg", name: "Magic", command: "swaybg -m fill -i "  + homePath + "/Idk-yet/Idk-yet/swaybg/magic.jpg" },
+                                    { path: "file://" + homePath + "/Idk-yet/Idk-yet/custom_wallpaper_engine/space_with_eyes.png", name: "Eyes (interactive)", command: "python3 " + homePath + "/Idk-yet/Idk-yet/custom_wallpaper_engine/parallax_wallpaper_engine.py" },
                                 ]
 
                                 Button {
@@ -302,7 +303,7 @@ Scope {
                                     ToolTip.delay: 1
 
                                     onClicked: Quickshell.execDetached([
-                                        "bash", "-c", "pkill -x swaybg; swaybg -m fill -i \"" + modelData.path.replace('file://', '') + "\""
+                                        "bash", "-c", "pkill -x swaybg; " + modelData.command + " >> /home/carlisle/test_log.log"
                                     ])
                                 }
                             }

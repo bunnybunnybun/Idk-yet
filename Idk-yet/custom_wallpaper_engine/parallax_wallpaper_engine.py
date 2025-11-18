@@ -10,6 +10,9 @@ class WallpaperWindow(Gtk.Window):
     def __init__(self):
         super().__init__(title="Wallpaper hopefully")
 
+        current_pid = os.getpid()
+        print(current_pid)
+
         GtkLayerShell.init_for_window(self)
         GtkLayerShell.set_layer(self, GtkLayerShell.Layer.BACKGROUND)
         GtkLayerShell.set_anchor(self, GtkLayerShell.Edge.TOP, True)
