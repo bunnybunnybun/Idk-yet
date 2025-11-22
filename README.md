@@ -11,10 +11,11 @@ https://www.youtube.com/watch?v=Rlvf2WlRe48
  - A wallpaper selector, that uses a custom backend that allows for interactive/parallax wallpapers.
  - A taskbar :)
 
-## Coming soon (hopefully):
+## In progress/Coming soon (hopefully):
  - A settings app
  - A screenshot utility
  - An introduction menu
+ - A utility for making custom interactive wallpapers
 
 ## Installation:
 Note: If you are reviewing this for Siege (that's probably why you are here) you don't need to install it, just watch the demo video linked above.

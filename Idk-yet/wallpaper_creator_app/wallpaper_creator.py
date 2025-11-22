@@ -28,62 +28,32 @@ class MainWindow(Gtk.Window):
             "foreground_2": None
         }
 
-        self.background_label = Gtk.Label(label="Choose the background image:")
-        self.background_label.set_halign(Gtk.Align.START)
+        self.main_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+        self.left_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        self.left_box.get_style_context().add_class("left")
+        #self.left_box.set_size_request(200,1000)
 
-        self.main_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        self.choose_background_image_button = Gtk.FileChooserButton(title="Select image", action=Gtk.FileChooserAction.OPEN)
-        self.choose_background_image_button.connect("file-set", self.on_file_selected)
-        self.choose_background_image_button.set_name("background")
-        self.choose_background_image_button.set_halign(Gtk.Align.START)
+        self.background_settings = self.BackgroundSettings(self)
+        self.foreground_1_settings = self.Foreground1Settings(self)
+        self.foreground_2_settings = self.Foreground2Settings(self)
 
-        self.foreground_1_label = Gtk.Label(label="Choose the first foreground image:")
-        self.foreground_1_label.set_halign(Gtk.Align.START)
-
-        self.choose_foreground_1_image_button = Gtk.FileChooserButton(title="Select image", action=Gtk.FileChooserAction.OPEN)
-        self.choose_foreground_1_image_button.connect("file-set", self.on_file_selected)
-        self.choose_foreground_1_image_button.set_name("foreground_1")
-        self.choose_foreground_1_image_button.set_halign(Gtk.Align.START)
-
-        self.foreground_1_offset_entry_x = Gtk.Entry()
-        self.foreground_1_offset_entry_x.set_halign(Gtk.Align.START)
-        #self.foreground_1_offset_entry_x.set_value(30)
-
-        self.foreground_1_offset_entry_y = Gtk.Scale.new_with_range(orientation=Gtk.Orientation.HORIZONTAL, min=0, max=100, step=1)
-        self.foreground_1_offset_entry_y.set_halign(Gtk.Align.START)
-        self.foreground_1_offset_entry_y.set_value(30)
-
-        self.foreground_2_label = Gtk.Label(label="Choose the second foreground image:")
-        self.foreground_2_label.set_halign(Gtk.Align.START)
-
-        self.choose_foreground_2_image_button = Gtk.FileChooserButton(title="Select image", action=Gtk.FileChooserAction.OPEN)
-        self.choose_foreground_2_image_button.connect("file-set", self.on_file_selected)
-        self.choose_foreground_2_image_button.set_name("foreground_2")
-        self.choose_foreground_2_image_button.set_halign(Gtk.Align.START)
-
-        self.foreground_2_offset_entry_x = Gtk.Scale.new_with_range(orientation=Gtk.Orientation.HORIZONTAL, min=0, max=100, step=1)
-        self.foreground_2_offset_entry_x.set_halign(Gtk.Align.START)
-        self.foreground_2_offset_entry_x.set_value(30)
-
-        self.foreground_2_offset_entry_y = Gtk.Scale.new_with_range(orientation=Gtk.Orientation.HORIZONTAL, min=0, max=100, step=1)
-        self.foreground_2_offset_entry_y.set_halign(Gtk.Align.START)
-        self.foreground_2_offset_entry_y.set_value(30)
+        self.stack = Gtk.Stack()
+        self.stack.set_transition_type(Gtk.StackTransitionType.CROSSFADE)
+        self.stack.set_transition_duration(500)
+        self.stack.add_titled(self.background_settings, "Background", "Background")
+        self.stack.add_titled(self.foreground_1_settings, "Foreground 1", "Foreground 1")
+        self.stack.add_titled(self.foreground_2_settings, "Foreground 2", "Foreground 2")
+        self.switcher = Gtk.StackSidebar()
+        self.switcher.set_stack(self.stack)
 
         self.set_as_wallpaper_button = Gtk.Button(label="Set as wallpaper")
         self.set_as_wallpaper_button.set_halign(Gtk.Align.START)
         self.set_as_wallpaper_button.connect("clicked", self.set_as_wallpaper)
-
-        self.main_box.pack_start(self.background_label, False, False, 0)
-        self.main_box.pack_start(self.choose_background_image_button, False, False, 0)
-        self.main_box.pack_start(self.foreground_1_label, False, False, 0)
-        self.main_box.pack_start(self.choose_foreground_1_image_button, False, False, 0)
-        self.main_box.pack_start(self.foreground_1_offset_entry_x, False, False, 0)
-        self.main_box.pack_start(self.foreground_1_offset_entry_y, False, False, 0)
-        self.main_box.pack_start(self.foreground_2_label, False, False, 0)
-        self.main_box.pack_start(self.choose_foreground_2_image_button, False, False, 0)
-        self.main_box.pack_start(self.foreground_2_offset_entry_x, False, False, 0)
-        self.main_box.pack_start(self.foreground_2_offset_entry_y, False, False, 0)
-        self.main_box.pack_start(self.set_as_wallpaper_button, False, False, 0)
+        
+        self.left_box.pack_start(self.switcher, True, True, 0)
+        self.left_box.pack_start(self.set_as_wallpaper_button, False, False, 0)
+        self.main_box.pack_start(self.left_box, False, False, 0)
+        self.main_box.pack_start(self.stack, False, False, 0)
         self.add(self.main_box)
 
     def on_file_selected(self, file_chooser):
@@ -97,10 +67,10 @@ class MainWindow(Gtk.Window):
         background = self.file_paths.get("background", "")
         foreground1 = self.file_paths.get("foreground_1", "")
         foreground2 = self.file_paths.get("foreground_2", "")
-        foreground_1_offset_x = self.foreground_1_offset_entry_x.get_text()
-        foreground_1_offset_y = self.foreground_1_offset_entry_y.get_value()
-        foreground_2_offset_x = self.foreground_2_offset_entry_x.get_value()
-        foreground_2_offset_y = self.foreground_2_offset_entry_y.get_value()
+        foreground_1_offset_x = self.foreground_1_settings.foreground_1_offset_entry_x.get_text()
+        foreground_1_offset_y = self.foreground_1_settings.foreground_1_offset_entry_y.get_value()
+        foreground_2_offset_x = self.foreground_2_settings.foreground_2_offset_entry_x.get_value()
+        foreground_2_offset_y = self.foreground_2_settings.foreground_2_offset_entry_y.get_value()
         subprocess.Popen([
             "python3",
             os.path.expanduser("~/Idk-yet/Idk-yet/wallpaper_creator_app/parallax_wallpaper.py"),
@@ -112,6 +82,71 @@ class MainWindow(Gtk.Window):
             str(foreground_2_offset_x),
             str(foreground_2_offset_y),
         ], start_new_session=True)
+
+    class BackgroundSettings(Gtk.Box):
+        def __init__(self, parent):
+            super().__init__(orientation=Gtk.Orientation.VERTICAL, spacing=10)
+
+            self.background_label = Gtk.Label(label="Choose the background image:")
+            self.background_label.set_halign(Gtk.Align.START)
+
+            self.choose_background_image_button = Gtk.FileChooserButton(title="Select image", action=Gtk.FileChooserAction.OPEN)
+            self.choose_background_image_button.connect("file-set", parent.on_file_selected)
+            self.choose_background_image_button.set_name("background")
+            self.choose_background_image_button.set_halign(Gtk.Align.START)
+
+            self.pack_start(self.background_label, False, False, 0)
+            self.pack_start(self.choose_background_image_button, False, False, 0)
+
+    class Foreground1Settings(Gtk.Box):
+        def __init__(self, parent):
+            super().__init__(orientation=Gtk.Orientation.VERTICAL, spacing=10)
+
+            self.foreground_1_label = Gtk.Label(label="Choose the first foreground image:")
+            self.foreground_1_label.set_halign(Gtk.Align.START)
+
+            self.choose_foreground_1_image_button = Gtk.FileChooserButton(title="Select image", action=Gtk.FileChooserAction.OPEN)
+            self.choose_foreground_1_image_button.connect("file-set", parent.on_file_selected)
+            self.choose_foreground_1_image_button.set_name("foreground_1")
+            self.choose_foreground_1_image_button.set_halign(Gtk.Align.START)
+
+            self.foreground_1_offset_entry_x = Gtk.Entry()
+            self.foreground_1_offset_entry_x.set_halign(Gtk.Align.START)
+            #self.foreground_1_offset_entry_x.set_value(30)
+
+            self.foreground_1_offset_entry_y = Gtk.Scale.new_with_range(orientation=Gtk.Orientation.HORIZONTAL, min=0, max=100, step=1)
+            self.foreground_1_offset_entry_y.set_halign(Gtk.Align.START)
+            #self.foreground_1_offset_entry_y.set_value(30)
+
+            self.pack_start(self.foreground_1_label, False, False, 0)
+            self.pack_start(self.choose_foreground_1_image_button, False, False, 0)
+            self.pack_start(self.foreground_1_offset_entry_x, False, False, 0)
+            self.pack_start(self.foreground_1_offset_entry_y, False, False, 0)
+
+    class Foreground2Settings(Gtk.Box):
+        def __init__(self, parent):
+            super().__init__(orientation=Gtk.Orientation.VERTICAL, spacing=10)
+
+            self.foreground_2_label = Gtk.Label(label="Choose the second foreground image:")
+            self.foreground_2_label.set_halign(Gtk.Align.START)
+
+            self.choose_foreground_2_image_button = Gtk.FileChooserButton(title="Select image", action=Gtk.FileChooserAction.OPEN)
+            self.choose_foreground_2_image_button.connect("file-set", parent.on_file_selected)
+            self.choose_foreground_2_image_button.set_name("foreground_2")
+            self.choose_foreground_2_image_button.set_halign(Gtk.Align.START)
+
+            self.foreground_2_offset_entry_x = Gtk.Scale.new_with_range(orientation=Gtk.Orientation.HORIZONTAL, min=0, max=100, step=1)
+            self.foreground_2_offset_entry_x.set_halign(Gtk.Align.START)
+            self.foreground_2_offset_entry_x.set_value(30)
+
+            self.foreground_2_offset_entry_y = Gtk.Scale.new_with_range(orientation=Gtk.Orientation.HORIZONTAL, min=0, max=100, step=1)
+            self.foreground_2_offset_entry_y.set_halign(Gtk.Align.START)
+            self.foreground_2_offset_entry_y.set_value(30)
+
+            self.pack_start(self.foreground_2_label, False, False, 0)
+            self.pack_start(self.choose_foreground_2_image_button, False, False, 0)
+            self.pack_start(self.foreground_2_offset_entry_x, False, False, 0)
+            self.pack_start(self.foreground_2_offset_entry_y, False, False, 0)
 
 win = MainWindow()
 win.connect("destroy", Gtk.main_quit)
