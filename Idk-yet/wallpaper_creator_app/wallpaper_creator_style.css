@@ -1,14 +1,31 @@
 box {
     margin: 10px;
     border-radius: 10px;
+    background-color: rgb(30, 30, 46);
+}
+
+box.left {
+    background-color: black;
 }
 
 button {
     margin: 10px;
-    border-radius: 10px;
+    border-radius: 15px;
     min-width: 50px;
 }
 
 scale {
     min-width: 150px;
+}
+
+stacksidebar.sidebar list {
+    background: rgb(16, 20, 94);
+    background-color: rgb(17, 17, 27);
+    padding: 7px;
+    border-radius: 10px;
+}
+
+stacksidebar.sidebar row {
+    background-color: rgb(49, 50, 68);
+    border-radius: 5px;
 }
