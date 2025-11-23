@@ -32,7 +32,7 @@ class MainWindow(Gtk.Window):
         self.left_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         self.left_box.get_style_context().add_class("left")
         self.left_box.set_size_request(200,200)
-        self.left_box.set_halign(Gtk.Align.START)
+        self.left_box.set_valign(Gtk.Align.START)
 
         self.background_settings = self.BackgroundSettings(self)
         self.foreground_1_settings = self.Foreground1Settings(self)
@@ -41,7 +41,6 @@ class MainWindow(Gtk.Window):
         self.stack = Gtk.Stack()
         self.stack.set_transition_type(Gtk.StackTransitionType.CROSSFADE)
         self.stack.set_transition_duration(500)
-        self.stack.set_hexpand(False)
         self.stack.add_titled(self.background_settings, "Background", "Background")
         self.stack.add_titled(self.foreground_1_settings, "Foreground 1", "Foreground 1")
         self.stack.add_titled(self.foreground_2_settings, "Foreground 2", "Foreground 2")
@@ -86,6 +85,22 @@ class MainWindow(Gtk.Window):
             str(foreground_2_offset_y),
         ], start_new_session=True)
 
+    def open_file_chooser(self, button, file_type):
+        dialog = Gtk.FileChooserDialog(
+            title="Select Image",
+            parent=self,
+            action=Gtk.FileChooserAction.OPEN
+        )
+        dialog.add_buttons(
+            Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+            Gtk.STOCK_OPEN, Gtk.ResponseType.ACCEPT
+        )
+        response = dialog.run()
+        if response == Gtk.ResponseType.ACCEPT:
+            self.file_paths[file_type] = dialog.get_filename()
+            button.set_label(os.path.basenam(dialog.get_filename()))
+            dialog.destroy()
+
     class BackgroundSettings(Gtk.Box):
         def __init__(self, parent):
             super().__init__(orientation=Gtk.Orientation.VERTICAL, spacing=10)
@@ -93,13 +108,30 @@ class MainWindow(Gtk.Window):
             self.background_label = Gtk.Label(label="Choose the background image:")
             self.background_label.set_halign(Gtk.Align.START)
 
-            self.choose_background_image_button = Gtk.FileChooserButton(title="Select image", action=Gtk.FileChooserAction.OPEN)
-            self.choose_background_image_button.connect("file-set", parent.on_file_selected)
+            self.choose_background_image_button = Gtk.Button(label="Select image")
+            self.choose_background_image_button.connect("clicked", parent.open_file_chooser, "background")
             self.choose_background_image_button.set_name("background")
             self.choose_background_image_button.set_halign(Gtk.Align.START)
+            self.choose_background_image_button.get_style_context().add_class("custom-filechooser")
 
             self.pack_start(self.background_label, False, False, 0)
             self.pack_start(self.choose_background_image_button, False, False, 0)
+
+        def open_file_chooser(self, button, file_type):
+            dialog = Gtk.FileChooserDialog(
+                title="Select Image",
+                parent=self,
+                action=Gtk.FileChooserAction.OPEN
+            )
+            dialog.add_buttons(
+                Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+                Gtk.STOCK_OPEN, Gtk.ResponseType.ACCEPT
+            )
+            response = dialog.run()
+            if response == Gtk.ResponseType.ACCEPT:
+                self.file_paths[file_type] = dialog.get_filename()
+                button.set_label(os.path.basenam(dialog.get_filename()))
+                dialog.destroy()
 
     class Foreground1Settings(Gtk.Box):
         def __init__(self, parent):
