@@ -98,8 +98,8 @@ class MainWindow(Gtk.Window):
         response = dialog.run()
         if response == Gtk.ResponseType.ACCEPT:
             self.file_paths[file_type] = dialog.get_filename()
-            button.set_label(os.path.basenam(dialog.get_filename()))
-            dialog.destroy()
+            button.set_label(os.path.basename(dialog.get_filename()))
+        dialog.destroy()
 
     class BackgroundSettings(Gtk.Box):
         def __init__(self, parent):

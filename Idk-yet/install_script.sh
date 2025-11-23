@@ -1,6 +1,6 @@
 #!/bin/bash
 sudo pacman -Syu
-sudo pacman -S --needed kitty git base-devel fuzzel swaybg sddm gtk3 gtk4 gtk-layer-shell
+sudo pacman -S --needed python-cairo kitty git base-devel fuzzel swaybg sddm gtk3 gtk4 gtk-layer-shell
 sudo systemctl enable sddm
 pip install PyGOBject --break-system-packages
 if [ -f "$HOME/Idk-yet/.yay_has_been_installed" ]; then
