@@ -29,6 +29,7 @@ class MainWindow(Gtk.Window):
         }
 
         self.main_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+        self.main_box.get_style_context().add_class("main")
         self.left_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         self.left_box.get_style_context().add_class("left")
         self.left_box.set_size_request(200,200)
@@ -104,6 +105,7 @@ class MainWindow(Gtk.Window):
     class BackgroundSettings(Gtk.Box):
         def __init__(self, parent):
             super().__init__(orientation=Gtk.Orientation.VERTICAL, spacing=10)
+            self.get_style_context().add_class("settings")
 
             self.background_label = Gtk.Label(label="Choose the background image:")
             self.background_label.set_halign(Gtk.Align.START)
@@ -112,30 +114,14 @@ class MainWindow(Gtk.Window):
             self.choose_background_image_button.connect("clicked", parent.open_file_chooser, "background")
             self.choose_background_image_button.set_name("background")
             self.choose_background_image_button.set_halign(Gtk.Align.START)
-            self.choose_background_image_button.get_style_context().add_class("custom-filechooser")
 
             self.pack_start(self.background_label, False, False, 0)
             self.pack_start(self.choose_background_image_button, False, False, 0)
 
-        def open_file_chooser(self, button, file_type):
-            dialog = Gtk.FileChooserDialog(
-                title="Select Image",
-                parent=self,
-                action=Gtk.FileChooserAction.OPEN
-            )
-            dialog.add_buttons(
-                Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
-                Gtk.STOCK_OPEN, Gtk.ResponseType.ACCEPT
-            )
-            response = dialog.run()
-            if response == Gtk.ResponseType.ACCEPT:
-                self.file_paths[file_type] = dialog.get_filename()
-                button.set_label(os.path.basenam(dialog.get_filename()))
-                dialog.destroy()
-
     class Foreground1Settings(Gtk.Box):
         def __init__(self, parent):
             super().__init__(orientation=Gtk.Orientation.VERTICAL, spacing=10)
+            self.get_style_context().add_class("settings")
 
             self.foreground_1_label = Gtk.Label(label="Choose the first foreground image:")
             self.foreground_1_label.set_halign(Gtk.Align.START)
@@ -161,6 +147,7 @@ class MainWindow(Gtk.Window):
     class Foreground2Settings(Gtk.Box):
         def __init__(self, parent):
             super().__init__(orientation=Gtk.Orientation.VERTICAL, spacing=10)
+            self.get_style_context().add_class("settings")
 
             self.foreground_2_label = Gtk.Label(label="Choose the second foreground image:")
             self.foreground_2_label.set_halign(Gtk.Align.START)
