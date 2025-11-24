@@ -135,6 +135,7 @@ class MainWindow(Gtk.Window):
             self.choose_foreground_1_image_button.set_name("foreground_1")
             self.choose_foreground_1_image_button.set_halign(Gtk.Align.START)
 
+            self.fg_1_intensity_slider_label = Gtk.Label(label="Set how intensely this image reacts to cursor movement:")
             self.fg_1_intensity_slider = Gtk.Scale.new_with_range(
                 orientation=Gtk.Orientation.HORIZONTAL,
                 min=-2,
@@ -143,18 +144,25 @@ class MainWindow(Gtk.Window):
             )
             self.fg_1_intensity_slider.set_value(0.4)
 
+            self.fg_1_offset_x_label = Gtk.Label(label="Choose how the image should be offset, in pixels,\nfrom the center of the screen in the X axis:")
+            self.fg_1_offset_x_label.set_halign(Gtk.Align.START)
             self.foreground_1_offset_entry_x = Gtk.Entry()
             self.foreground_1_offset_entry_x.set_halign(Gtk.Align.START)
-            #self.foreground_1_offset_entry_x.set_value(30)
+            self.foreground_1_offset_entry_x.set_text("0")
 
+            self.fg_1_offset_y_label = Gtk.Label(label="Choose how the image should be offset, in pixels,\nfrom the center of the screen in the Y axis:")
+            self.fg_1_offset_y_label.set_halign(Gtk.Align.START)
             self.foreground_1_offset_entry_y = Gtk.Entry()
             self.foreground_1_offset_entry_y.set_halign(Gtk.Align.START)
-            #self.foreground_1_offset_entry_y.set_value(30)
+            self.foreground_1_offset_entry_y.set_text("0")
 
             self.pack_start(self.foreground_1_label, False, False, 0)
             self.pack_start(self.choose_foreground_1_image_button, False, False, 0)
+            self.pack_start(self.fg_1_intensity_slider_label, False, False, 0)
             self.pack_start(self.fg_1_intensity_slider, False, False, 0)
+            self.pack_start(self.fg_1_offset_x_label, False, False, 0)
             self.pack_start(self.foreground_1_offset_entry_x, False, False, 0)
+            self.pack_start(self.fg_1_offset_y_label, False, False, 0)
             self.pack_start(self.foreground_1_offset_entry_y, False, False, 0)
 
     class Foreground2Settings(Gtk.Box):
@@ -170,6 +178,7 @@ class MainWindow(Gtk.Window):
             self.choose_foreground_2_image_button.set_name("foreground_2")
             self.choose_foreground_2_image_button.set_halign(Gtk.Align.START)
 
+            self.fg_2_intensity_slider_label = Gtk.Label(label="Set how intensely this image reacts to cursor movement:")
             self.fg_2_intensity_slider = Gtk.Scale.new_with_range(
                 orientation=Gtk.Orientation.HORIZONTAL,
                 min=-2,
@@ -178,16 +187,25 @@ class MainWindow(Gtk.Window):
             )
             self.fg_2_intensity_slider.set_value(-0.4)
 
+            self.fg_2_offset_x_label = Gtk.Label(label="Choose how the image should be offset, in pixels,\nfrom the center of the screen in the X axis:")
+            self.fg_2_offset_x_label.set_halign(Gtk.Align.START)
             self.foreground_2_offset_entry_x = Gtk.Entry()
             self.foreground_2_offset_entry_x.set_halign(Gtk.Align.START)
+            self.foreground_2_offset_entry_x.set_text("0")
 
+            self.fg_2_offset_y_label = Gtk.Label(label="Choose how the image should be offset, in pixels,\nfrom the center of the screen in the Y axis:")
+            self.fg_2_offset_y_label.set_halign(Gtk.Align.START)
             self.foreground_2_offset_entry_y = Gtk.Entry()
             self.foreground_2_offset_entry_y.set_halign(Gtk.Align.START)
+            self.foreground_2_offset_entry_y.set_text("0")
 
             self.pack_start(self.foreground_2_label, False, False, 0)
             self.pack_start(self.choose_foreground_2_image_button, False, False, 0)
+            self.pack_start(self.fg_2_intensity_slider_label, False, False, 0)
             self.pack_start(self.fg_2_intensity_slider, False, False, 0)
+            self.pack_start(self.fg_2_offset_x_label, False, False, 0)
             self.pack_start(self.foreground_2_offset_entry_x, False, False, 0)
+            self.pack_start(self.fg_2_offset_y_label, False, False, 0)
             self.pack_start(self.foreground_2_offset_entry_y, False, False, 0)
 
 win = MainWindow()
