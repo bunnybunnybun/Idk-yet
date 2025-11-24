@@ -1,3 +1,7 @@
+window {
+    background-color: rgb(17, 17, 27);
+}
+
 box.main {
     margin: 10px;
     border-radius: 10px;
@@ -13,6 +17,7 @@ box.settings {
 box.left {
     background-color: rgb(24, 24, 37);
     margin: 10px;
+    border-radius: 10px;
 }
 
 button {
@@ -35,4 +40,8 @@ stacksidebar.sidebar list {
 stacksidebar.sidebar row {
     background-color: rgb(49, 50, 68);
     border-radius: 5px;
+}
+
+label.explainer {
+    margin-top: 20px;
 }

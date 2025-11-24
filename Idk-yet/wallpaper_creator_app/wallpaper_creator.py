@@ -40,7 +40,7 @@ class MainWindow(Gtk.Window):
         self.foreground_2_settings = self.Foreground2Settings(self)
 
         self.stack = Gtk.Stack()
-        self.stack.set_transition_type(Gtk.StackTransitionType.CROSSFADE)
+        self.stack.set_transition_type(Gtk.StackTransitionType.SLIDE_RIGHT)
         self.stack.set_transition_duration(500)
         self.stack.add_titled(self.background_settings, "Background", "Background")
         self.stack.add_titled(self.foreground_1_settings, "Foreground 1", "Foreground 1")
@@ -76,6 +76,9 @@ class MainWindow(Gtk.Window):
         foreground_2_offset_y = self.foreground_2_settings.foreground_2_offset_entry_y.get_text()
         foreground_1_intensity = self.foreground_1_settings.fg_1_intensity_slider.get_value()
         foreground_2_intensity = self.foreground_2_settings.fg_2_intensity_slider.get_value()
+        subprocess.Popen([
+            "pkill",  "-f", "wallpaper_engine.py",
+        ], start_new_session=True)
         subprocess.Popen([
             "python3",
             os.path.expanduser("~/Idk-yet/Idk-yet/wallpaper_creator_app/parallax_wallpaper.py"),
@@ -136,6 +139,7 @@ class MainWindow(Gtk.Window):
             self.choose_foreground_1_image_button.set_halign(Gtk.Align.START)
 
             self.fg_1_intensity_slider_label = Gtk.Label(label="Set how intensely this image reacts to cursor movement:")
+            self.fg_1_intensity_slider_label.get_style_context().add_class("explainer")
             self.fg_1_intensity_slider = Gtk.Scale.new_with_range(
                 orientation=Gtk.Orientation.HORIZONTAL,
                 min=-2,
@@ -146,12 +150,14 @@ class MainWindow(Gtk.Window):
 
             self.fg_1_offset_x_label = Gtk.Label(label="Choose how the image should be offset, in pixels,\nfrom the center of the screen in the X axis:")
             self.fg_1_offset_x_label.set_halign(Gtk.Align.START)
+            self.fg_1_offset_x_label.get_style_context().add_class("explainer")
             self.foreground_1_offset_entry_x = Gtk.Entry()
             self.foreground_1_offset_entry_x.set_halign(Gtk.Align.START)
             self.foreground_1_offset_entry_x.set_text("0")
 
             self.fg_1_offset_y_label = Gtk.Label(label="Choose how the image should be offset, in pixels,\nfrom the center of the screen in the Y axis:")
             self.fg_1_offset_y_label.set_halign(Gtk.Align.START)
+            self.fg_1_offset_y_label.get_style_context().add_class("explainer")
             self.foreground_1_offset_entry_y = Gtk.Entry()
             self.foreground_1_offset_entry_y.set_halign(Gtk.Align.START)
             self.foreground_1_offset_entry_y.set_text("0")
@@ -179,6 +185,7 @@ class MainWindow(Gtk.Window):
             self.choose_foreground_2_image_button.set_halign(Gtk.Align.START)
 
             self.fg_2_intensity_slider_label = Gtk.Label(label="Set how intensely this image reacts to cursor movement:")
+            self.fg_2_intensity_slider_label.get_style_context().add_class("explainer")
             self.fg_2_intensity_slider = Gtk.Scale.new_with_range(
                 orientation=Gtk.Orientation.HORIZONTAL,
                 min=-2,
@@ -189,12 +196,14 @@ class MainWindow(Gtk.Window):
 
             self.fg_2_offset_x_label = Gtk.Label(label="Choose how the image should be offset, in pixels,\nfrom the center of the screen in the X axis:")
             self.fg_2_offset_x_label.set_halign(Gtk.Align.START)
+            self.fg_2_offset_x_label.get_style_context().add_class("explainer")
             self.foreground_2_offset_entry_x = Gtk.Entry()
             self.foreground_2_offset_entry_x.set_halign(Gtk.Align.START)
             self.foreground_2_offset_entry_x.set_text("0")
 
             self.fg_2_offset_y_label = Gtk.Label(label="Choose how the image should be offset, in pixels,\nfrom the center of the screen in the Y axis:")
             self.fg_2_offset_y_label.set_halign(Gtk.Align.START)
+            self.fg_2_offset_y_label.get_style_context().add_class("explainer")
             self.foreground_2_offset_entry_y = Gtk.Entry()
             self.foreground_2_offset_entry_y.set_halign(Gtk.Align.START)
             self.foreground_2_offset_entry_y.set_text("0")

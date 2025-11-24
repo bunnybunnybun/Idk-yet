@@ -309,6 +309,33 @@ Scope {
                                 }
                             }
                         }
+
+                        Button {
+                            id: customWallpaper
+                            contentItem: Label {
+                                text: "Create your own interactive wallpaper"
+                                font.pixelSize: 20
+                                font.bold: true
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                            }
+                            Layout.alignment: Qt.AlignRight
+                            anchors.rightMargin: 8
+                            Layout.preferredHeight: 35
+                            Layout.preferredWidth: 460
+                            Layout.margins: 20
+                            onClicked: Quickshell.execDetached([
+                                "bash", "-c", "python3 ~/Idk-yet/Idk-yet/wallpaper_creator_app/wallpaper_creator.py"
+                            ])
+                            background: Rectangle {
+                                bottomLeftRadius: 20
+                                bottomRightRadius: 20
+                                topLeftRadius: 20
+                                topRightRadius: 20
+                                color: parent.down ? Qt.rgba(1.0, 0.7, 0.988, 1.0) :
+                                    parent.hovered ? Qt.rgba(1.0, 0.85, 1.0, 1.0) : Qt.rgba(1.0, 0.7, 0.988, 1.0)
+                            }
+                        }
                     }
                 }
             }
