@@ -74,6 +74,8 @@ class MainWindow(Gtk.Window):
         foreground_1_offset_y = self.foreground_1_settings.foreground_1_offset_entry_y.get_text()
         foreground_2_offset_x = self.foreground_2_settings.foreground_2_offset_entry_x.get_text()
         foreground_2_offset_y = self.foreground_2_settings.foreground_2_offset_entry_y.get_text()
+        foreground_1_intensity = self.foreground_1_settings.fg_1_intensity_slider.get_value()
+        foreground_2_intensity = self.foreground_2_settings.fg_2_intensity_slider.get_value()
         subprocess.Popen([
             "python3",
             os.path.expanduser("~/Idk-yet/Idk-yet/wallpaper_creator_app/parallax_wallpaper.py"),
@@ -84,6 +86,8 @@ class MainWindow(Gtk.Window):
             str(foreground_1_offset_y),
             str(foreground_2_offset_x),
             str(foreground_2_offset_y),
+            str(foreground_1_intensity),
+            str(foreground_2_intensity),
         ], start_new_session=True)
 
     def open_file_chooser(self, button, file_type):
@@ -131,6 +135,14 @@ class MainWindow(Gtk.Window):
             self.choose_foreground_1_image_button.set_name("foreground_1")
             self.choose_foreground_1_image_button.set_halign(Gtk.Align.START)
 
+            self.fg_1_intensity_slider = Gtk.Scale.new_with_range(
+                orientation=Gtk.Orientation.HORIZONTAL,
+                min=-2,
+                max=2,
+                step=0.01
+            )
+            self.fg_1_intensity_slider.set_value(0.4)
+
             self.foreground_1_offset_entry_x = Gtk.Entry()
             self.foreground_1_offset_entry_x.set_halign(Gtk.Align.START)
             #self.foreground_1_offset_entry_x.set_value(30)
@@ -141,6 +153,7 @@ class MainWindow(Gtk.Window):
 
             self.pack_start(self.foreground_1_label, False, False, 0)
             self.pack_start(self.choose_foreground_1_image_button, False, False, 0)
+            self.pack_start(self.fg_1_intensity_slider, False, False, 0)
             self.pack_start(self.foreground_1_offset_entry_x, False, False, 0)
             self.pack_start(self.foreground_1_offset_entry_y, False, False, 0)
 
@@ -157,6 +170,14 @@ class MainWindow(Gtk.Window):
             self.choose_foreground_2_image_button.set_name("foreground_2")
             self.choose_foreground_2_image_button.set_halign(Gtk.Align.START)
 
+            self.fg_2_intensity_slider = Gtk.Scale.new_with_range(
+                orientation=Gtk.Orientation.HORIZONTAL,
+                min=-2,
+                max=2,
+                step=0.01
+            )
+            self.fg_2_intensity_slider.set_value(-0.4)
+
             self.foreground_2_offset_entry_x = Gtk.Entry()
             self.foreground_2_offset_entry_x.set_halign(Gtk.Align.START)
 
@@ -165,6 +186,7 @@ class MainWindow(Gtk.Window):
 
             self.pack_start(self.foreground_2_label, False, False, 0)
             self.pack_start(self.choose_foreground_2_image_button, False, False, 0)
+            self.pack_start(self.fg_2_intensity_slider, False, False, 0)
             self.pack_start(self.foreground_2_offset_entry_x, False, False, 0)
             self.pack_start(self.foreground_2_offset_entry_y, False, False, 0)
 

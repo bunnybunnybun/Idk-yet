@@ -26,6 +26,10 @@ class WallpaperWindow(Gtk.Window):
             print(f"Fg image 2 X offset: {self.foreground_2_offset_x}")
             self.foreground_2_offset_y = float(sys.argv[7])
             print(f"Fg image 2 Y offset: {self.foreground_2_offset_y}")
+            self.fg_1_intensity = float(sys.argv[8])
+            print(f"Fg 2 intensity: {self.fg_1_intensity}")
+            self.fg_2_intensity = float(sys.argv[9])
+            print(f"Fg 2 intensity: {self.fg_2_intensity}")
         else:
             self.background_path = None
             self.foreground_1_path = None
@@ -117,14 +121,16 @@ class WallpaperWindow(Gtk.Window):
         center_x = self.screen_width / 2
         center_y = self.screen_height / 2
 
-        parallax_x = center_x + (self.mouse_x - center_x) * 0.2
-        parallax_y = center_y + (self.mouse_y - center_y) * 0.2
+        parallax_x_1 = center_x + (self.mouse_x - center_x) * self.fg_1_intensity
+        parallax_y_1 = center_y + (self.mouse_y - center_y) * self.fg_1_intensity
+        parallax_x_2 = center_x + (self.mouse_x - center_x) * self.fg_2_intensity
+        parallax_y_2 = center_y + (self.mouse_y - center_y) * self.fg_2_intensity
 
         Gdk.cairo_set_source_pixbuf(
             cr,
             self.foreground_1,
-            self.foreground_1_offset_x + parallax_x - self.foreground_1.get_width() / 2,
-            self.foreground_1_offset_y + parallax_y - self.foreground_1.get_height() / 2
+            self.foreground_1_offset_x + parallax_x_1 - self.foreground_1.get_width() / 2,
+            self.foreground_1_offset_y + parallax_y_1 - self.foreground_1.get_height() / 2
 
         )
         cr.paint()
@@ -132,8 +138,8 @@ class WallpaperWindow(Gtk.Window):
         Gdk.cairo_set_source_pixbuf(
             cr,
             self.foreground_2,
-            self.foreground_2_offset_x + parallax_x - self.foreground_2.get_width() / 2,
-            self.foreground_2_offset_y + parallax_y - self.foreground_2.get_height() / 2
+            self.foreground_2_offset_x + parallax_x_2 - self.foreground_2.get_width() / 2,
+            self.foreground_2_offset_y + parallax_y_2 - self.foreground_2.get_height() / 2
 
         )
         cr.paint()
