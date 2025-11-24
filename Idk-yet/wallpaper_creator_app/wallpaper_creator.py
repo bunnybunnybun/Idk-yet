@@ -71,9 +71,9 @@ class MainWindow(Gtk.Window):
         foreground1 = self.file_paths.get("foreground_1", "")
         foreground2 = self.file_paths.get("foreground_2", "")
         foreground_1_offset_x = self.foreground_1_settings.foreground_1_offset_entry_x.get_text()
-        foreground_1_offset_y = self.foreground_1_settings.foreground_1_offset_entry_y.get_value()
-        foreground_2_offset_x = self.foreground_2_settings.foreground_2_offset_entry_x.get_value()
-        foreground_2_offset_y = self.foreground_2_settings.foreground_2_offset_entry_y.get_value()
+        foreground_1_offset_y = self.foreground_1_settings.foreground_1_offset_entry_y.get_text()
+        foreground_2_offset_x = self.foreground_2_settings.foreground_2_offset_entry_x.get_text()
+        foreground_2_offset_y = self.foreground_2_settings.foreground_2_offset_entry_y.get_text()
         subprocess.Popen([
             "python3",
             os.path.expanduser("~/Idk-yet/Idk-yet/wallpaper_creator_app/parallax_wallpaper.py"),
@@ -135,7 +135,7 @@ class MainWindow(Gtk.Window):
             self.foreground_1_offset_entry_x.set_halign(Gtk.Align.START)
             #self.foreground_1_offset_entry_x.set_value(30)
 
-            self.foreground_1_offset_entry_y = Gtk.Scale.new_with_range(orientation=Gtk.Orientation.HORIZONTAL, min=0, max=100, step=1)
+            self.foreground_1_offset_entry_y = Gtk.Entry()
             self.foreground_1_offset_entry_y.set_halign(Gtk.Align.START)
             #self.foreground_1_offset_entry_y.set_value(30)
 
@@ -157,13 +157,11 @@ class MainWindow(Gtk.Window):
             self.choose_foreground_2_image_button.set_name("foreground_2")
             self.choose_foreground_2_image_button.set_halign(Gtk.Align.START)
 
-            self.foreground_2_offset_entry_x = Gtk.Scale.new_with_range(orientation=Gtk.Orientation.HORIZONTAL, min=0, max=100, step=1)
+            self.foreground_2_offset_entry_x = Gtk.Entry()
             self.foreground_2_offset_entry_x.set_halign(Gtk.Align.START)
-            self.foreground_2_offset_entry_x.set_value(30)
 
-            self.foreground_2_offset_entry_y = Gtk.Scale.new_with_range(orientation=Gtk.Orientation.HORIZONTAL, min=0, max=100, step=1)
+            self.foreground_2_offset_entry_y = Gtk.Entry()
             self.foreground_2_offset_entry_y.set_halign(Gtk.Align.START)
-            self.foreground_2_offset_entry_y.set_value(30)
 
             self.pack_start(self.foreground_2_label, False, False, 0)
             self.pack_start(self.choose_foreground_2_image_button, False, False, 0)
