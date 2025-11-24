@@ -148,7 +148,7 @@ class MainWindow(Gtk.Window):
                 max=2,
                 step=0.01
             )
-            self.fg_1_intensity_slider.set_value(0.4)
+            self.fg_1_intensity_slider.set_value(-0.4)
 
             self.fg_1_offset_x_label = Gtk.Label(label="Choose how the image should be offset, in pixels,\nfrom the center of the screen in the X axis:")
             self.fg_1_offset_x_label.set_halign(Gtk.Align.START)
@@ -195,7 +195,7 @@ class MainWindow(Gtk.Window):
                 max=2,
                 step=0.01
             )
-            self.fg_2_intensity_slider.set_value(-0.4)
+            self.fg_2_intensity_slider.set_value(0.4)
 
             self.fg_2_offset_x_label = Gtk.Label(label="Choose how the image should be offset, in pixels,\nfrom the center of the screen in the X axis:")
             self.fg_2_offset_x_label.set_halign(Gtk.Align.START)

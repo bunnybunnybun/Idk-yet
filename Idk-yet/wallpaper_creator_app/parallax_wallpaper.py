@@ -58,7 +58,7 @@ class WallpaperWindow(Gtk.Window):
 
         self.drawing_area = Gtk.DrawingArea()
         self.drawing_area.connect("draw", self.on_draw)
-        GLib.timeout_add(50, self.update_mouse_position)
+        GLib.timeout_add(100, self.update_mouse_position)
 
         self.connect("realize", self.on_realize)
 
