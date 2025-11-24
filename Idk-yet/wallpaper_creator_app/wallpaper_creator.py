@@ -40,11 +40,11 @@ class MainWindow(Gtk.Window):
         self.foreground_2_settings = self.Foreground2Settings(self)
 
         self.stack = Gtk.Stack()
-        self.stack.set_transition_type(Gtk.StackTransitionType.SLIDE_RIGHT)
+        self.stack.set_transition_type(Gtk.StackTransitionType.SLIDE_LEFT)
         self.stack.set_transition_duration(500)
-        self.stack.add_titled(self.background_settings, "Background", "Background")
-        self.stack.add_titled(self.foreground_1_settings, "Foreground 1", "Foreground 1")
-        self.stack.add_titled(self.foreground_2_settings, "Foreground 2", "Foreground 2")
+        self.stack.add_titled(self.background_settings, "Background", "Background (layer 1)")
+        self.stack.add_titled(self.foreground_1_settings, "Foreground 1", "Foreground 1 (layer 2)")
+        self.stack.add_titled(self.foreground_2_settings, "Foreground 2", "Foreground 2 (layer 3)")
         self.switcher = Gtk.StackSidebar()
         self.switcher.set_stack(self.stack)
         self.switcher.set_size_request(200,200)
@@ -115,6 +115,7 @@ class MainWindow(Gtk.Window):
             self.get_style_context().add_class("settings")
 
             self.background_label = Gtk.Label(label="Choose the background image:")
+            self.background_label.get_style_context().add_class("header")
             self.background_label.set_halign(Gtk.Align.START)
 
             self.choose_background_image_button = Gtk.Button(label="Select image ")
@@ -131,6 +132,7 @@ class MainWindow(Gtk.Window):
             self.get_style_context().add_class("settings")
 
             self.foreground_1_label = Gtk.Label(label="Choose the first foreground image:")
+            self.foreground_1_label.get_style_context().add_class("header")
             self.foreground_1_label.set_halign(Gtk.Align.START)
 
             self.choose_foreground_1_image_button = Gtk.Button(label="Select image ")
@@ -138,7 +140,7 @@ class MainWindow(Gtk.Window):
             self.choose_foreground_1_image_button.set_name("foreground_1")
             self.choose_foreground_1_image_button.set_halign(Gtk.Align.START)
 
-            self.fg_1_intensity_slider_label = Gtk.Label(label="Set how intensely this image reacts to cursor movement:")
+            self.fg_1_intensity_slider_label = Gtk.Label(label="Set how intensely this layer reacts to cursor movement:")
             self.fg_1_intensity_slider_label.get_style_context().add_class("explainer")
             self.fg_1_intensity_slider = Gtk.Scale.new_with_range(
                 orientation=Gtk.Orientation.HORIZONTAL,
@@ -177,6 +179,7 @@ class MainWindow(Gtk.Window):
             self.get_style_context().add_class("settings")
 
             self.foreground_2_label = Gtk.Label(label="Choose the second foreground image:")
+            self.foreground_2_label.get_style_context().add_class("header")
             self.foreground_2_label.set_halign(Gtk.Align.START)
 
             self.choose_foreground_2_image_button = Gtk.Button(label="Select image ")
@@ -184,7 +187,7 @@ class MainWindow(Gtk.Window):
             self.choose_foreground_2_image_button.set_name("foreground_2")
             self.choose_foreground_2_image_button.set_halign(Gtk.Align.START)
 
-            self.fg_2_intensity_slider_label = Gtk.Label(label="Set how intensely this image reacts to cursor movement:")
+            self.fg_2_intensity_slider_label = Gtk.Label(label="Set how intensely this layer reacts to cursor movement:")
             self.fg_2_intensity_slider_label.get_style_context().add_class("explainer")
             self.fg_2_intensity_slider = Gtk.Scale.new_with_range(
                 orientation=Gtk.Orientation.HORIZONTAL,

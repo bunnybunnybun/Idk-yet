@@ -324,7 +324,7 @@ Scope {
                             Layout.preferredHeight: 35
                             Layout.preferredWidth: 460
                             Layout.margins: 20
-                            onClicked: Quickshell.execDetached([
+                            onClicked: settingsPopup.visible = !settingsPopup.visible, Quickshell.execDetached([
                                 "bash", "-c", "python3 ~/Idk-yet/Idk-yet/wallpaper_creator_app/wallpaper_creator.py"
                             ])
                             background: Rectangle {
