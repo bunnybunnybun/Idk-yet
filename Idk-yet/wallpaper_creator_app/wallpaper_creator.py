@@ -99,7 +99,7 @@ class MainWindow(Gtk.Window):
         response = dialog.run()
         if response == Gtk.ResponseType.ACCEPT:
             self.file_paths[file_type] = dialog.get_filename()
-            button.set_label(os.path.basename(dialog.get_filename()))
+            button.set_label(f"{os.path.basename(dialog.get_filename())} ")
         dialog.destroy()
 
     class BackgroundSettings(Gtk.Box):
@@ -110,7 +110,7 @@ class MainWindow(Gtk.Window):
             self.background_label = Gtk.Label(label="Choose the background image:")
             self.background_label.set_halign(Gtk.Align.START)
 
-            self.choose_background_image_button = Gtk.Button(label="Select image")
+            self.choose_background_image_button = Gtk.Button(label="Select image ")
             self.choose_background_image_button.connect("clicked", parent.open_file_chooser, "background")
             self.choose_background_image_button.set_name("background")
             self.choose_background_image_button.set_halign(Gtk.Align.START)
@@ -126,8 +126,8 @@ class MainWindow(Gtk.Window):
             self.foreground_1_label = Gtk.Label(label="Choose the first foreground image:")
             self.foreground_1_label.set_halign(Gtk.Align.START)
 
-            self.choose_foreground_1_image_button = Gtk.FileChooserButton(title="Select image", action=Gtk.FileChooserAction.OPEN)
-            self.choose_foreground_1_image_button.connect("file-set", parent.on_file_selected)
+            self.choose_foreground_1_image_button = Gtk.Button(label="Select image ")
+            self.choose_foreground_1_image_button.connect("clicked", parent.open_file_chooser, "foreground_1")
             self.choose_foreground_1_image_button.set_name("foreground_1")
             self.choose_foreground_1_image_button.set_halign(Gtk.Align.START)
 
@@ -152,8 +152,8 @@ class MainWindow(Gtk.Window):
             self.foreground_2_label = Gtk.Label(label="Choose the second foreground image:")
             self.foreground_2_label.set_halign(Gtk.Align.START)
 
-            self.choose_foreground_2_image_button = Gtk.FileChooserButton(title="Select image", action=Gtk.FileChooserAction.OPEN)
-            self.choose_foreground_2_image_button.connect("file-set", parent.on_file_selected)
+            self.choose_foreground_2_image_button = Gtk.Button(label="Select image ")
+            self.choose_foreground_2_image_button.connect("clicked", parent.open_file_chooser, "foreground_2")
             self.choose_foreground_2_image_button.set_name("foreground_2")
             self.choose_foreground_2_image_button.set_halign(Gtk.Align.START)
 
